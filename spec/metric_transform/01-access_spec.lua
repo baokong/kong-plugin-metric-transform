@@ -43,7 +43,7 @@ for _, strategy in helpers.each_strategy() do
       proxy_client.close()
     end
   end)
-  
+
   describe("transformer", function ()
     it("should transform length unit to metric", function ()
       -- send requests through Kong
