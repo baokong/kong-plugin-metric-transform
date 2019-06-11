@@ -6,7 +6,7 @@
 local cjson = require "cjson"
 
 -- Grab pluginname from module name
-local plugin_name = ({...})[1]:match("^kong%.plugins%.([^%.]+)")
+local plugin_name = "metric_transform"
 
 -- load the base plugin object and create a subclass
 local MetricTransformHandler = require("kong.plugins.base_plugin"):extend()
@@ -16,6 +16,11 @@ function MetricTransformHandler:new()
   MetricTransformHandler.super.new(self, plugin_name)
 
   -- do initialization here, runs in the 'init_by_lua_block', before worker processes are forked
+
+end
+
+function MetricTransformHandler:header_filter(conf)
+  MetricTransformHandler.super.header_filter(self)
 
 end
 
@@ -99,12 +104,12 @@ end
 -- Transforms unit length into meters from any
 -- metric length measurement.
 local function transform_json_body(buffered_data)
-  if ~buffered_data then
+  if buffered_data == nil then
     return
   end
 
   local json_data = cjson.decode(buffered_data)
-  if ~json_data or ~check_format(json_data) then
+  if not json_data or not check_format(json_data) then
     return upstream_error('Upstream formatting incorrect', buffered_data)
   end
 

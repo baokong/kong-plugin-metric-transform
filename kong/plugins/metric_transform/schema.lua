@@ -1,5 +1,6 @@
 return {
   no_consumer = false, -- this plugin is available on APIs as well as on Consumers,
+  name = "metric_transform",
   fields = {
     -- Describe your plugin's configuration's schema here.
     
