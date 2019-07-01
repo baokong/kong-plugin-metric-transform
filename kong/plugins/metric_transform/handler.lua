@@ -6,7 +6,7 @@
 local cjson = require "cjson"
 
 -- Grab pluginname from module name
-local plugin_name = "metric_transform"
+local plugin_name = "metric-transform"
 
 -- load the base plugin object and create a subclass
 local MetricTransformHandler = require("kong.plugins.base_plugin"):extend()
