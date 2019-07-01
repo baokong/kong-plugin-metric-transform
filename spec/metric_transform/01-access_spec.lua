@@ -10,7 +10,10 @@ for _, strategy in helpers.each_strategy() do
         setup(function()
             local service = bp.services:insert {
                 name = "rl-service",
-                host = "http://138.68.29.156:4000/random_length"
+                host = "138.68.29.156",
+                protocol = "http",
+                port = 4000,
+                path = "/random_length"
             }
 
             local route1 = bp.routes:insert {
@@ -18,10 +21,10 @@ for _, strategy in helpers.each_strategy() do
                 service = { id = service.id }
             }
 
-            bp.plugins:insert {
+            assert(bp.plugins:insert {
                 route = { id = route1.id },
                 name = "metric_transform"
-            }
+            })
 
             assert(helpers.start_kong({
                 plugins = "bundled," .. PLUGIN_NAME
